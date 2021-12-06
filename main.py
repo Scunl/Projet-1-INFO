@@ -1,11 +1,14 @@
 from fltk import *
 
 lst = ["alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette"]
+print("vous etes pas en mode misere")
 
+
+"""
 def jeu(nb_alum, retrait):
-    """
+    
     Gagnant du jeu avec nombre donné d'alumette à retirer en fonction du nombre d'alumettes totales
-    """
+
 
     while len(lst) > retrait:
         for i in range(retrait):
@@ -20,6 +23,7 @@ def jeu(nb_alum, retrait):
             lst.pop(i)
 
     return lst
+"""
 
 def create_game(nb_alum):
     """
@@ -27,34 +31,49 @@ def create_game(nb_alum):
     [1, 2, 3, 4, 5]
     """
     cree_fenetre(1000, 1000)
+    image(500, 200, 'paquet.png')
+    texte(100, 500, 'Jouer', couleur='Blue', taille=30)
     
-    a = 3
-    lst = []
-    for i in range(nb_alum):
-        rectangle(10 + 10*a*i, 100, 30 + 10*a*i, 200, couleur='Orange', remplissage='Orange')
-        alumettes = rectangle(10 + 10*a*i, 100, 30 + 10*a*i, 200, couleur='Orange', remplissage='Orange')
-        lst.append(alumettes)
-    attend_ev()
-    ferme_fenetre()
-    lstf = []
-    for elem in lst:
-        lstf.append(int(elem/2))
-
-    return lstf, lst
+    while True:
+        mise_a_jour()
+        ev = donne_ev()
+        tev = type_ev(ev)
+        if tev == 'ClicGauche':
+            efface_tout()
+            lst = []
+            for i in range(nb_alum):
+                alumettes = image(20 + 30*i, 80, 'allumerlefeu.png')
+                lst.append(alumettes)
+        
+        
+        if tev =='ClicGauche':
+            return lst
+        if tev == 'Quitte':
+            exit()
+        
+        
+    
 
 def retrait_alum(lst):
     """
     """
-    while len(lst) > 0:
-        
-        attend_clic_gauche()
-        lst.pop(0)
-        efface(lst[0])
+
+    a = []
+    while True:
+        ev = donne_ev()
+        tev = type_ev(ev)
+
+        if len(lst) > 0:
+            if tev == 'ClicGauche':
+                efface(lst.pop())
+
+                print(lst)
+                
+        mise_a_jour()
 
 
 
-
-create_game(20)
-retrait_alum(lst)
+print("vous etes pas en mode misere")
+retrait_alum(create_game(20))
 
 
