@@ -63,15 +63,36 @@ def retrait_alum(lst):
         ev = donne_ev()
         tev = type_ev(ev)
 
+        if tev == 'Quitte':
+            exit()
+
         if len(lst) > 0:
             if tev == 'ClicGauche':
                 efface(lst.pop())
 
-                print(lst)
-                
+        txt = texte(400, 400, "Au tour du joueur 1", couleur='black', taille=40)
         mise_a_jour()
+        if tev == 'ClicDroit':
+            efface(txt)
+            mise_a_jour()
+            txt = texte(100, 400, "Au tour du joueur 2", couleur='black', taille=40)
+        
+        mise_a_jour()
+                
 
-
+def tour_joueur(joueur):
+    """
+    """
+    while True:
+        ev = donne_ev()
+        tev = type_ev(ev)
+        
+        texte(400, 400, "Au tour du joueur 1", couleur='black', taille=40)
+        mise_a_jour()
+        if tev == 'ClicDroit':
+            texte(200, 400, "Au tour du joueur 2", couleur='black', taille=40)
+        
+        mise_a_jour()
 
 print("vous etes pas en mode misere")
 retrait_alum(create_game(20))
