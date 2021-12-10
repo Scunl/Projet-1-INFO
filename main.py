@@ -1,8 +1,10 @@
 from fltk import *
 
 lst = ["alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette"]
-print("vous etes pas en mode misere")
 
+cree_fenetre(1000, 1000)
+image(500, 200, 'paquet.png')
+texte(75, 400, 'Jouer', couleur='Blue', taille=30)
 
 """
 def jeu(nb_alum, retrait):
@@ -30,71 +32,63 @@ def create_game(nb_alum):
     >>> create_game(5)
     [1, 2, 3, 4, 5]
     """
-    cree_fenetre(1000, 1000)
-    image(500, 200, 'paquet.png')
-    texte(100, 500, 'Jouer', couleur='Blue', taille=30)
     
-    while True:
-        mise_a_jour()
-        ev = donne_ev()
-        tev = type_ev(ev)
-        if tev == 'ClicGauche':
-            efface_tout()
-            lst = []
-            for i in range(nb_alum):
-                alumettes = image(20 + 30*i, 80, 'allumerlefeu.png')
-                lst.append(alumettes)
-        
-        
-        if tev =='ClicGauche':
-            return lst
-        if tev == 'Quitte':
-            exit()
-        
-        
+    if tev == 'ClicGauche':
+        efface_tout()
+        lst = []
+        for i in range(nb_alum):
+            alumettes = image(20 + 30*i, 80, 'allumerlefeu.png')
+            lst.append(alumettes)
+    
+        return lst
     
 
 def retrait_alum(lst):
     """
     """
 
-    a = []
-    while True:
-        ev = donne_ev()
-        tev = type_ev(ev)
+    if len(lst) > 0:
+        efface(lst.pop())
 
-        if tev == 'Quitte':
-            exit()
+    return lst
 
-        if len(lst) > 0:
-            if tev == 'ClicGauche':
-                efface(lst.pop())
-
-        txt = texte(400, 400, "Au tour du joueur 1", couleur='black', taille=40)
-        mise_a_jour()
-        if tev == 'ClicDroit':
-            efface(txt)
-            mise_a_jour()
-            txt = texte(100, 400, "Au tour du joueur 2", couleur='black', taille=40)
-        
-        mise_a_jour()
-                
-
-def tour_joueur(joueur):
+def coup_possible(lst, k, coup, rang):
     """
     """
-    while True:
-        ev = donne_ev()
-        tev = type_ev(ev)
-        
-        texte(400, 400, "Au tour du joueur 1", couleur='black', taille=40)
-        mise_a_jour()
-        if tev == 'ClicDroit':
-            texte(200, 400, "Au tour du joueur 2", couleur='black', taille=40)
-        
-        mise_a_jour()
+    return not coup <= len(lst[rang]) and not coup < k
 
-print("vous etes pas en mode misere")
-retrait_alum(create_game(20))
+def tour_par_tour():
+    """
+    """
+
+    cmpt = 1
+
+    if cmpt == 2:
+
+        cmpt -= 1
+        texte(10,10, f"C'est au tour du joueur {cmpt} ", couleur='Blue', taille=20, tag="Joueur")
+    else:
+
+        cmpt += 1
+        texte(10,10, f"C'est au tour du joueur {cmpt} ", couleur='Blue', taille=20, tag="Joueur")
+
+    return cmpt
+
+
+def zone_clic(abscisse, ordonnee, clicordo, clicabs):
+    if abscisse == 
+
+
+
+if __name__ == "__main__":
+    ev = donne_ev()
+    tev = type_ev(ev)
+
+    
+
+
+
+
+
 
 
