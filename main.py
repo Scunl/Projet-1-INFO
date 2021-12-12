@@ -1,3 +1,4 @@
+from tkinter.constants import N
 from fltk import *
 
 lst = ["alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette"]
@@ -30,17 +31,15 @@ def jeu(nb_alum, retrait):
 def create_game(nb_alum):
     """
     >>> create_game(5)
-    [1, 2, 3, 4, 5]
+    [alumette, alumette, alumette, alumette, alumette]
     """
     
-    if tev == 'ClicGauche':
-        efface_tout()
-        lst = []
-        for i in range(nb_alum):
-            alumettes = image(20 + 30*i, 80, 'allumerlefeu.png')
-            lst.append(alumettes)
-    
-        return lst
+    lst = []
+    for i in range(nb_alum):
+        
+        lst.append("alumette")
+
+    return lst
     
 
 def retrait_alum(lst):
@@ -48,7 +47,7 @@ def retrait_alum(lst):
     """
 
     if len(lst) > 0:
-        efface(lst.pop())
+        lst.pop()
 
     return lst
 
@@ -66,17 +65,35 @@ def tour_par_tour():
     if cmpt == 2:
 
         cmpt -= 1
-        texte(10,10, f"C'est au tour du joueur {cmpt} ", couleur='Blue', taille=20, tag="Joueur")
     else:
-
         cmpt += 1
-        texte(10,10, f"C'est au tour du joueur {cmpt} ", couleur='Blue', taille=20, tag="Joueur")
-
+        
     return cmpt
 
+def setting(n):
+    """
+    """
+    nb_alum = [n]
+    type_game = ["Mode misère", "Mode Normal"]
+    couleur_interface = ['Blue', 'Black', 'Red']
 
-def zone_clic(abscisse, ordonnee, clicordo, clicabs):
-    if abscisse == 
+    return n
+
+def QuitGame():
+    """
+    """
+    exit()
+
+def zone_clic(bouton1, bouton2, bouton3, clic):
+    """
+    """
+    if bouton1 == clic:
+        return create_game(setting())
+    if bouton2 == clic:
+        return setting()
+    if bouton3 == clic:
+        return QuitGame()
+
 
 
 
