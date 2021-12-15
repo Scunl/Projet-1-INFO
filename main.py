@@ -97,7 +97,7 @@ def zone_clic(bouton1, bouton2, bouton3, text):
     print(ordonnee_souris())
     print(a1)
     if (a1 <= abscisse_souris() <= a1 + a) and (b1 <= ordonnee_souris() <= b1 + b):
-        
+        create_game(21)
         print ("ahah tu veux changer les parametres fdp ?")
     if (a2 <= abscisse_souris() <= a2 + a) and (b2 <= ordonnee_souris() <= b2 + b):
         print ("ahah tu veux jouer fdp ?")
@@ -124,9 +124,6 @@ while True:
     print(zone_clic((75,600), (75, 400), (75, 800), 'Parametre'))
 
 
-
-
-lst = create_game(5)
-for i, elem in enumerate(lst):
-    image(10, 10 + 30*i, 30, 30*i, 'allumerlefeu.png', tag='alumette')
+    for i, elem in enumerate(lst):
+        alum = image(10, 10 + 30*i, 30, 30*i, 'allumerlefeu.png')
 
