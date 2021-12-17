@@ -3,28 +3,6 @@ from fltk import *
 lst = ["alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette"]
 
 
-
-"""
-def jeu(nb_alum, retrait):
-    
-    Gagnant du jeu avec nombre donné d'alumette à retirer en fonction du nombre d'alumettes totales
-
-
-    while len(lst) > retrait:
-        for i in range(retrait):
-            lst.pop(0)
-    if len(lst) == retrait:
-        print("joueur 1 à gagné")
-    else:
-        print("joueur 2 a gagné")
-    
-    if len(lst) == 0:
-        for i in range(len(lst)):
-            lst.pop(i)
-
-    return lst
-"""
-
 def create_game(nb_alum):
     """
     >>> create_game(5)
@@ -82,36 +60,18 @@ def QuitGame():
     """
     exit()
 
-def zone_clic_menu(bouton1, bouton2, bouton3, text):
+def zone_clic_menu(bouton, text):
     """
     """
 
 
     a, b = taille_texte(text)
-    a1, b1 = bouton1
-    a2, b2 = bouton2
-    a3, b3 = bouton3
+    a1, b1 = bouton
 
     if (a1 <= abscisse_souris() <= a1 + a) and (b1 <= ordonnee_souris() <= b1 + b):
-        
+        return True
 
-        type1 = "Jeu"
-
-        return type1
-
-    if (a2  <= abscisse_souris() <= a1 + a) and (b2 <= ordonnee_souris() <= b2 + b):
-        
-
-        type1 = "Settings"
-
-        return type1
-        
-
-    if (a3 <= abscisse_souris() <= a3 + a) and (b3 <= ordonnee_souris() <= b3 + b):
-        
-        QuitGame()
-
-    return None
+    return False
 
     
     
@@ -127,10 +87,10 @@ if __name__ == '__main__':
 
     cree_fenetre(1920, 1080)
 
-    image(960, 200, 'paquet.png')
-    texte(75, 400, 'Jouer', couleur='Blue', taille=30)
-    texte(75, 600, 'Parametres', couleur='Blue', taille=30)
-    texte(75, 800, 'Quitter', couleur='Blue', taille=30)
+    image(960, 200, 'paquet.png', ancrage='center')
+    image(100, 400, 'Jouer.png', ancrage='nw')
+    image(100, 600, 'Settings.png', ancrage='nw')
+    image(100, 800, 'Quitter.png', ancrage='nw')
     mise_a_jour()
 
     
@@ -144,18 +104,18 @@ if __name__ == '__main__':
         if tev == 'Touche':
             efface_tout()
             image(960, 200, 'paquet.png', ancrage='center')
-            texte(75, 400, 'Jouer', couleur='Blue', taille=30)
-            texte(75, 600, 'Parametres', couleur='Blue', taille=30)
-            texte(75, 800, 'Quitter', couleur='Blue', taille=30)
+            image(100, 400, 'Jouer.png', ancrage='nw')
+            image(100, 600, 'Settings.png', ancrage='nw')
+            image(100, 800, 'Quitter.png', ancrage='nw')
             
         ### ENTRANCE: PLAY, SETTINGS, QUIT ###
         if tev == 'ClicGauche':
         
-            if zone_clic_menu((75, 400), (75, 600), (75, 800), 'Jouer..') == "Jeu":
+            if zone_clic_menu((100, 400), 'Jouer.....'):
                 efface_tout()
                 lst = create_game(21)
                 for i, elem in enumerate(lst):
-                    image(50 + 60*i, 200, 'allumerlefeu.png', ancrage='center', tag=f"alumette{i}")
+                    image(50 + 50*i, 200, 'allumerlefeu.png', tag=f"alumette{i}")
                     
             mise_a_jour()
             if tev == 'ClicGauche':
@@ -163,9 +123,10 @@ if __name__ == '__main__':
                     efface(lst.pop())
 
                 if retrait_alum(lst) == "pas d'alu":
-                    texte(960, 20, "Il n'y a plus d'alumette fils de pute", couleur='RED', ancrage='center')
+                    texte(960, 20, "Il n'y a plus d'alumette fils de pute", couleur='RED')
 
-                    
-            if zone_clic_menu((75, 400), (75, 600), (75, 800), 'Parametre') == "Settings":
+            if zone_clic_menu((100, 600), 'Parametres......'):
                 efface_tout()
-                texte(500, 50, 'Configuration des parametres:', taille=20, couleur='Red', ancrage='center')
+                texte(500, 50, 'Configuration des parametres:', taille=20, couleur='Red')
+            if zone_clic_menu((100, 800), "Quitter....."):
+                QuitGame()
