@@ -1,12 +1,14 @@
+from tkinter.constants import Y
 from fltk import *
+from time import sleep
 
-lst = ["alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette", "alumette"]
-nb_coup = 0
+# PROPRIETE DE WALID
+# NE PAS LIRE (illégal)
+n = 21
+nombre_max = 3
 
 def create_game(nb_alum):
     """
-    >>> create_game(5)
-    [alumette, alumette, alumette, alumette, alumette]
     """
     
     lst = []
@@ -32,87 +34,38 @@ def coup_possible(lst, k, coup, rang):
     """
     return not coup <= len(lst[rang]) and not coup < k
 
-def tour_par_tour():
+
+def setting():
     """
     """
-
-    cmpt = 1
-
-    if cmpt == 2:
-
-        cmpt -= 1
-    else:
-        cmpt += 1
-        
-    return cmpt
-
-def setting(n):
-    """
-    """
-    nb_alum = [n]
-    type_game = ["Mode misère", "Mode Normal"]
+    type_game = ["Mode Normal", "Mode Misère"]
     couleur_interface = ['Blue', 'Black', 'Red']
 
-    return n
+    return type_game, couleur_interface
 
 
-def joue_coup(lst, coup, rang):
+def joue_coup(lst, coup):
     eff = []
     for i in range(coup):
-        eff.append(lst[rang].pop())
+        eff.append(lst.pop())
     return eff
 
 
 
-def victoire(lst,coup):
-    None
-
-def menu():
-
-    cree_fenetre(1920, 1080)
-
-    image(960, 200, 'paquet.png', ancrage='center')
-    image(100, 400, 'Jouer.png', ancrage='nw')
-    image(100, 600, 'Settings.png', ancrage='nw')
-    image(100, 800, 'exit.png', ancrage='nw')
-    mise_a_jour()
-
-    while True:
-        mise_a_jour()
-        ev = donne_ev()
-        tev = type_ev(ev)
-
-        ### CREATION MAIN MENU ###
-        if tev == 'Touche':
-            efface_tout()
-            image(960, 200, 'paquet.png', ancrage='center')
-            image(100, 400, 'Jouer.png', ancrage='nw')
-            image(100, 600, 'Settings.png', ancrage='nw')
-            image(100, 800, 'exit.png', ancrage='nw')
-
-        break
-
-def jeu():
-    while True:
-        mise_a_jour()
-        ev = donne_ev()
-        tev = type_ev(ev)
-
-        if tev == 'ClicGauche':
-        
-            if zone_clic_menu((100, 400), 'Jouer.....'):
-                efface_tout()
-                lst = create_game(21)
-                for i, elem in enumerate(lst):
-                    image(50 + (50*i), 200, 'allumerlefeu.png', tag=f"alumette{i}")
-        break
-    
-
-
-def QuitGame():
+def victoire(lst):
     """
     """
-    exit()
+    if len(lst) == 0 :              
+        if cmpt == 1:
+            a = "j1"
+        if cmpt == 2:
+            a = "j2"
+    else:
+        return False
+
+    return a 
+
+
 
 def zone_clic_menu(bouton, text):
     """
@@ -137,45 +90,143 @@ def select(alumette):
     """
     """
 
-cree_fenetre(1920, 1080)
+x = 1080
+y = 960
 
-image(960, 200, 'paquet.png', ancrage='center')
-image(100, 400, 'Jouer.png', ancrage='nw')
-image(100, 600, 'Settings.png', ancrage='nw')
-image(100, 800, 'exit.png', ancrage='nw')
+cree_fenetre(x, y)
+
+image(x/2, y/6, 'paquet.png', ancrage='center')
+image(x/10, y/4, 'Jouer.png', ancrage='nw')
+image(x/10, y/3, 'Settings.png', ancrage='nw')
+image(x/10, y/2, 'Quitter.png', ancrage='nw')
 mise_a_jour()
 
+
 if __name__ == '__main__':
+    
+    
+    while True:
+        
+        
+    ### INTERFACE MENU ###
+        mise_a_jour()
+        ev = donne_ev()
+        tev = type_ev(ev)
+        
+        if tev == 'Quitte':
+            exit()
+
+        if tev == 'ClicGauche':
+
+            mise_a_jour()
+            if zone_clic_menu((100, 800), "Quitter....."):
+                exit()
+
+            if zone_clic_menu((x/10, y/4), 'Jouer.....'):
+                break
+
+            if zone_clic_menu((x/10, y/3), 'Parametres........'):
+                efface_tout()
+                texte(x/2 - len("Configuations des parametres") - 20, y//10, "Configuations des parametres")
+                texte(x//6, y//4, "-")
+                texte(x//4, y//4, str(n), tag="n")
+                texte(x//3, y//4, "+")
+                image(x//4, y/2, "Jouer.png", ancrage="nw")
+
+                while True:
+                    mise_a_jour()
+                    ev = donne_ev()
+                    tev = type_ev(ev)
+
+                    if tev == 'Quitte':
+                        exit()
+                    if tev == 'ClicGauche':
+                        if zone_clic_menu((x//6, y//4), "Moin"):
+                            n=n-1
+                            if n <= 0:
+                                n += 1
+                                texte(x - (x/2), y/5, "T'es sûr tu veux jouer ?", tag="limit2")
+                            efface("n")
+                            texte(x//4, y//4, str(n), tag="n")
+                        if zone_clic_menu((x//3, y//4), "Plus"):
+                            efface("limit2")
+                            n=n+1
+                            if n > 40:
+                                n -= 1
+                            efface("n")
+                            texte(x//4, y//4, str(n), tag="n")
+                        if zone_clic_menu((x//4,y/2), "Jouer"):
+                            break
+                break
+            
+
 
     ### INTERFACE JEU ###
-    while True:
-            
-            ### INTERFACE MENU ###
-            
+    cmpt = 1
+    nb_coup = 0
+    efface_tout()
+    lst = create_game(n)
+    for i, elem in enumerate(lst):
+        image(30 + (x/len(lst)*i - 20), 200, 'allumerlefeu.png', tag=f"alumette{i}")
+    texte(x // 2, y // 20, f"C'est au tour du joueur 1", tag="j")
 
-            
-        mise_a_jour()
-        ev = donne_ev()
-        tev = type_ev(ev)
-
-        if tev == 'ClicGauche':
-            if zone_clic_menu((100, 400), 'Jouer.....'):
-                nb_coup = 0
-                efface_tout()
-                lst = create_game(21)
-                for i, elem in enumerate(lst):
-                    image(50 + (50*i), 200, 'allumerlefeu.png', tag=f"alumette{i}")
-        break
     while True:
 
         mise_a_jour()
         ev = donne_ev()
         tev = type_ev(ev)
+        
+    
+        if tev == 'Quitte':
+            exit()
+
+
         if tev == 'ClicGauche':
             if retrait_alum(lst) == "il reste des alu":
-                nb_coup += 1
-                if nb_coup >=3:
-                    texte(400, 400, "Vous avez atteint le maximum d'allumettes selectionnables", couleur='Red')
+                if nb_coup >= nombre_max or nb_coup >= len(lst):
+                    texte(100, 70, "Vous avez atteint le maximum d'allumettes selectionnables", couleur='Red', tag="limit", taille=15)
+                else:
+                    efface("nbcoup")
+                    nb_coup += 1
+                    texte(x//2, y//2, str(nb_coup), tag='nbcoup')
+
+        if tev == 'ClicDroit': 
+            if nb_coup:
+                efface("limit")
+                efface("nbcoup")
+                nb_coup-=1
+                if nb_coup:
+                    texte(x//2, y//2, str(nb_coup), tag='nbcoup')
+        
+
+        if tev == 'Touche':
+
+            efface("limit")
+            eff = joue_coup(lst, nb_coup)
+            if nb_coup > 0:
+                if cmpt == 1:
+                    cmpt += 1
+                else:
+                    cmpt -= 1
+                efface("j")
+                texte(x // 2, y // 20, f"C'est au tour du joueur {cmpt}", tag="j")
+
+            for elem in eff:
+                efface(elem)
+
+            efface("nbcoup")
+            mise_a_jour()
+
+            nb_coup = 0
+            vic = victoire(lst)
+            if victoire(lst):
+                efface_tout()
+                texte(x/2, y/2, f"Le joueur {vic} a gagné")
+
+
+            
+
+            
 
                 ### CREATION MAIN MENU ###
 
@@ -183,26 +234,3 @@ if __name__ == '__main__':
     
         ### ENTRANCE: PLAY, SETTINGS, QUIT ###
 
-            if retrait_alum(lst) == "pas d'alu":
-                texte(960, 20, "Il n'y a plus d'alumette fils de pute", couleur='RED')
-
-            if zone_clic_menu((100, 600), 'Parametres........'):
-                efface_tout()
-                texte(500, 50, 'Configuration des parametres:', taille=20, couleur='Red')
-            if zone_clic_menu((100, 800), "Quitter....."):
-                QuitGame()
-
-
-
-
-
-
-
-
-
-if tev == 'Touche':
-    efface_tout()
-    image(960, 200, 'paquet.png', ancrage='center')
-    image(100, 400, 'Jouer.png', ancrage='nw')
-    image(100, 600, 'Settings.png', ancrage='nw')
-    image(100, 800, 'exit.png', ancrage='nw')
